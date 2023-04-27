@@ -100,7 +100,6 @@ async function requestPointerLock(el: HTMLElement) {
   try {
     await el.requestPointerLock();
   } catch (err) {
-    console.warn(err);
     pointerLockSupported = false;
   }
 }
