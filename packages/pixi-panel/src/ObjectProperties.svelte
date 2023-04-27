@@ -13,8 +13,7 @@
 
   $: transformPanel =
     typeof props.x === "number" ||
-    typeof props.angle === "number" ||
-    typeof props.scaleX === "number";
+    typeof props.angle === "number"
 
   $: transformOriginPanel =
     typeof props.originX === "number" ||
@@ -24,12 +23,11 @@
   $: visibilityPanel =
     typeof props.alpha === "number" || typeof props.visible === "boolean";
 
+  $: scalePanel =
+    typeof props.scaleX === "number" || typeof props.width === "boolean";
+
   let skewDimensionsPanel = "";
-  $: if (typeof props.width === "number" && typeof props.skewX === "number") {
-    skewDimensionsPanel = "Skew & Dimensions";
-  } else if (typeof props.width === "number") {
-    skewDimensionsPanel = "Dimensions";
-  } else if (typeof props.skewX === "number") {
+  $: if (typeof props.skewX === "number") {
     skewDimensionsPanel = "Skew";
   } else {
     skewDimensionsPanel = "";
@@ -79,6 +77,10 @@
         />
       </Property>
     {/if}
+  </Panel>
+{/if}
+{#if transformPanel}
+  <Panel title="Scale" bind:expanded={expanded.scale}>
     {#if typeof props.scaleX === "number"}
       <Property
         label="Scale X"
@@ -100,6 +102,26 @@
           location="BOTTOM"
           on:change={(e) =>
             dispatch("change", { property: "scaleY", value: e.detail })}
+        />
+      </Property>
+    {/if}
+    {#if typeof props.width === "number"}
+      <Property label="Width" group>
+        <NumberField
+          value={props.width}
+          step={1}
+          location="TOP"
+          on:change={(e) =>
+            dispatch("change", { property: "width", value: e.detail })}
+        />
+      </Property>
+      <Property label="Height">
+        <NumberField
+          value={props.height}
+          step={1}
+          location="BOTTOM"
+          on:change={(e) =>
+            dispatch("change", { property: "height", value: e.detail })}
         />
       </Property>
     {/if}
@@ -246,26 +268,6 @@
           location="BOTTOM"
           on:change={(e) =>
             dispatch("change", { property: "skewY", value: e.detail })}
-        />
-      </Property>
-    {/if}
-    {#if typeof props.width === "number"}
-      <Property label="Width" group>
-        <NumberField
-          value={props.width}
-          step={1}
-          location="TOP"
-          on:change={(e) =>
-            dispatch("change", { property: "width", value: e.detail })}
-        />
-      </Property>
-      <Property label="Height">
-        <NumberField
-          value={props.height}
-          step={1}
-          location="BOTTOM"
-          on:change={(e) =>
-            dispatch("change", { property: "height", value: e.detail })}
         />
       </Property>
     {/if}
