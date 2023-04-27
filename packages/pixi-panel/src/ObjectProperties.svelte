@@ -26,6 +26,9 @@
   $: scalePanel =
     typeof props.scaleX === "number" || typeof props.width === "boolean";
 
+  $: is3d = typeof props.z === "number" || typeof props.scaleZ === "number";
+
+
   let skewDimensionsPanel = "";
   $: if (typeof props.skewX === "number") {
     skewDimensionsPanel = "Skew";
@@ -45,16 +48,16 @@
           dispatch("change", { property: "x", value: e.detail })}
       />
     </Property>
-    <Property label="Y" group={typeof props.z === "number"}>
+    <Property label="Y" group={is3d}>
       <NumberField
         value={props.y}
         step={1}
-        location="MIDDLE"
+        location={is3d ? "MIDDLE" : "BOTTOM"}
         on:change={(e) =>
           dispatch("change", { property: "y", value: e.detail })}
       />
     </Property>
-    {#if typeof props.z === "number"}
+    {#if is3d}
     <Property label="Z">
       <NumberField
         value={props.z}
@@ -95,11 +98,11 @@
             dispatch("change", { property: "scaleX", value: e.detail })}
         />
       </Property>
-      <Property label="Y" group={typeof props.z === "number"}>
+      <Property label="Y" group={is3d}>
         <NumberField
           value={props.scaleY}
           step={0.1}
-          location="MIDDLE"
+          location={is3d ? "MIDDLE" : "BOTTOM"}
           on:change={(e) =>
             dispatch("change", { property: "scaleY", value: e.detail })}
         />
