@@ -47,15 +47,26 @@
           dispatch("change", { property: "x", value: e.detail })}
       />
     </Property>
-    <Property label="Y">
+    <Property label="Y" group={typeof props.z === "number"}>
       <NumberField
         value={props.y}
         step={1}
-        location="BOTTOM"
+        location="MIDDLE"
         on:change={(e) =>
           dispatch("change", { property: "y", value: e.detail })}
       />
     </Property>
+    {#if typeof props.z === "number"}
+    <Property label="Z">
+      <NumberField
+        value={props.z}
+        step={1}
+        location="BOTTOM"
+        on:change={(e) =>
+          dispatch("change", { property: "z", value: e.detail })}
+      />
+    </Property>
+    {/if}
 
     {#if typeof props.angle === "number"}
       <Property label="Angle" hint="The angle of the object in degrees">

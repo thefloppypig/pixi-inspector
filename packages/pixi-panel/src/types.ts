@@ -55,9 +55,11 @@ export type NodeProperties = {
   // Object
   x?: number;
   y?: number;
+  z?: number;
   angle?: number;
   scaleX?: number;
   scaleY?: number;
+  scaleZ?: number;
   anchorX?: number;
   anchorY?: number;
   pivotX?: number;

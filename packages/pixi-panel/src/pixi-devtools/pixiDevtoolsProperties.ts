@@ -107,6 +107,7 @@ export default function pixiDevtoolsProperties(devtools: PixiDevtools) {
 
       objectDefs.push(...directProp(node, "x", "number"));
       objectDefs.push(...directProp(node, "y", "number"));
+      objectDefs.push(...directProp(node, "z", "number"));
       objectDefs.push(...directProp(node, "angle", "number"));
       objectDefs.push(...pointProperty(node, "scale", "scaleX", "scaleY"));
       objectDefs.push(...directProp(node, "scaleX", "number"));
