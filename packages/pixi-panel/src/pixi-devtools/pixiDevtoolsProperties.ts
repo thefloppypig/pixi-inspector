@@ -67,7 +67,8 @@ export default function pixiDevtoolsProperties(devtools: PixiDevtools) {
     node: any,
     property: string,
     keyX: keyof NodeProperties,
-    keyY: keyof NodeProperties
+    keyY: keyof NodeProperties,
+    keyZ?: keyof NodeProperties
   ): PropertyMapping[] {
     if (
       property in node &&
@@ -77,7 +78,7 @@ export default function pixiDevtoolsProperties(devtools: PixiDevtools) {
       "y" in node[property] &&
       typeof node[property].y === "number"
     ) {
-      return [
+      const map: PropertyMapping[] = [
         {
           key: keyX,
           get: () => node[property].x,
@@ -95,6 +96,21 @@ export default function pixiDevtoolsProperties(devtools: PixiDevtools) {
           },
         },
       ];
+      if (
+        keyZ &&
+        "z" in node[property] &&
+        typeof node[property].z === "number"
+      ) {
+        map.push({
+          key: keyZ,
+          get: () => node[property].z,
+          set: (value) => {
+            // eslint-disable-next-line no-param-reassign
+            node[property].z = value;
+          },
+        });
+      }
+      return map;
     }
     return [];
   }
@@ -109,7 +125,9 @@ export default function pixiDevtoolsProperties(devtools: PixiDevtools) {
       objectDefs.push(...directProp(node, "y", "number"));
       objectDefs.push(...directProp(node, "z", "number"));
       objectDefs.push(...directProp(node, "angle", "number"));
-      objectDefs.push(...pointProperty(node, "scale", "scaleX", "scaleY"));
+      objectDefs.push(
+        ...pointProperty(node, "scale", "scaleX", "scaleY", "scaleZ")
+      );
       objectDefs.push(...directProp(node, "scaleX", "number"));
       objectDefs.push(...directProp(node, "scaleY", "number"));
       objectDefs.push(...directProp(node, "width", "number"));

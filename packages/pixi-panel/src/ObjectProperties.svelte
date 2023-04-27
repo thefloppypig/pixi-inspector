@@ -79,7 +79,7 @@
     {/if}
   </Panel>
 {/if}
-{#if transformPanel}
+{#if scalePanel}
   <Panel title="Scale" bind:expanded={expanded.scale}>
     {#if typeof props.scaleX === "number"}
       <Property
@@ -95,15 +95,26 @@
             dispatch("change", { property: "scaleX", value: e.detail })}
         />
       </Property>
-      <Property label="Y">
+      <Property label="Y" group={typeof props.z === "number"}>
         <NumberField
           value={props.scaleY}
           step={0.1}
-          location="BOTTOM"
+          location="MIDDLE"
           on:change={(e) =>
             dispatch("change", { property: "scaleY", value: e.detail })}
         />
       </Property>
+      {#if typeof props.scaleZ === "number"}
+      <Property label="Z">
+        <NumberField
+          value={props.scaleZ}
+          step={0.1}
+          location="BOTTOM"
+          on:change={(e) =>
+            dispatch("change", { property: "scaleZ", value: e.detail })}
+        />
+      </Property>
+      {/if}
     {/if}
     {#if typeof props.width === "number"}
       <Property label="Width" group>
