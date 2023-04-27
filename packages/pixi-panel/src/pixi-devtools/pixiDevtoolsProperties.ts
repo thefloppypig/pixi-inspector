@@ -68,7 +68,8 @@ export default function pixiDevtoolsProperties(devtools: PixiDevtools) {
     property: string,
     keyX: keyof NodeProperties,
     keyY: keyof NodeProperties,
-    keyZ?: keyof NodeProperties
+    keyZ?: keyof NodeProperties,
+    keyW?: keyof NodeProperties
   ): PropertyMapping[] {
     if (
       property in node &&
@@ -110,6 +111,20 @@ export default function pixiDevtoolsProperties(devtools: PixiDevtools) {
           },
         });
       }
+      if (
+        keyW &&
+        "w" in node[property] &&
+        typeof node[property].w === "number"
+      ) {
+        map.push({
+          key: keyW,
+          get: () => node[property].w,
+          set: (value) => {
+            // eslint-disable-next-line no-param-reassign
+            node[property].w = value;
+          },
+        });
+      }
       return map;
     }
     return [];
@@ -127,6 +142,16 @@ export default function pixiDevtoolsProperties(devtools: PixiDevtools) {
       objectDefs.push(...directProp(node, "angle", "number"));
       objectDefs.push(
         ...pointProperty(node, "scale", "scaleX", "scaleY", "scaleZ")
+      );
+      objectDefs.push(
+        ...pointProperty(
+          node,
+          "rotationQuaternion",
+          "quaternionX",
+          "quaternionY",
+          "quaternionZ",
+          "quaternionW"
+        )
       );
       objectDefs.push(...directProp(node, "scaleX", "number"));
       objectDefs.push(...directProp(node, "scaleY", "number"));

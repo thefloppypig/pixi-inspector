@@ -28,6 +28,8 @@
 
   $: is3d = typeof props.z === "number" || typeof props.scaleZ === "number";
 
+  $: hasRotationQuaternion =
+    typeof props.quaternionX === "number";
 
   let skewDimensionsPanel = "";
   $: if (typeof props.skewX === "number") {
@@ -82,6 +84,60 @@
     {/if}
   </Panel>
 {/if}
+
+{#if hasRotationQuaternion}
+<Panel title="3D" bind:expanded={expanded.prop3d}>
+  <Property label="Quaternion X" hint="The rotation of the 3D object in quaternion representation" group>
+    <NumberField
+      value={props.quaternionX}
+      step={0.1}
+      min={-1}
+      max={1}
+      location="TOP"
+      suffix=""
+      on:change={(e) =>
+        dispatch("change", { property: "quaternionX", value: e.detail })}
+    />
+  </Property>
+  <Property label="Y" group>
+    <NumberField
+      value={props.quaternionY}
+      step={0.1}
+      min={-1}
+      max={1}
+      location="MIDDLE"
+      suffix=""
+      on:change={(e) =>
+        dispatch("change", { property: "quaternionY", value: e.detail })}
+    />
+  </Property>
+  <Property label="Z" group>
+    <NumberField
+      value={props.quaternionZ}
+      step={0.1}
+      min={-1}
+      max={1}
+      location="MIDDLE"
+      suffix=""
+      on:change={(e) =>
+        dispatch("change", { property: "quaternionZ", value: e.detail })}
+    />
+  </Property>
+  <Property label="W" group>
+    <NumberField
+      value={props.quaternionW}
+      step={0.1}
+      min={-1}
+      max={1}
+      location="BOTTOM"
+      suffix=""
+      on:change={(e) =>
+        dispatch("change", { property: "quaternionW", value: e.detail })}
+    />
+  </Property>
+</Panel>
+{/if}
+
 {#if scalePanel}
   <Panel title="Scale" bind:expanded={expanded.scale}>
     {#if typeof props.scaleX === "number"}

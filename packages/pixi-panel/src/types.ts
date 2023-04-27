@@ -55,11 +55,9 @@ export type NodeProperties = {
   // Object
   x?: number;
   y?: number;
-  z?: number;
   angle?: number;
   scaleX?: number;
   scaleY?: number;
-  scaleZ?: number;
   anchorX?: number;
   anchorY?: number;
   pivotX?: number;
@@ -73,6 +71,13 @@ export type NodeProperties = {
   alpha?: number;
   visible?: boolean;
   cullable?: boolean;
+  // 3D
+  z?: number;
+  scaleZ?: number;
+  quaternionX?: number;
+  quaternionY?: number;
+  quaternionZ?: number;
+  quaternionW?: number;
   // Scene
   speed?: number;
   started?: boolean;
