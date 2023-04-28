@@ -1,4 +1,5 @@
 import type { GameObjects, Scene, Scenes } from "phaser";
+import type { Container3D, Model } from "pixi3d";
 import type {
   DisplayObject,
   TextStyleAlign,
@@ -42,7 +43,9 @@ export type UniversalNode =
   | Scene
   | GameObjects.GameObject
   | Scenes.SceneManager
-  | GameObjects.Particles.ParticleEmitter;
+  | GameObjects.Particles.ParticleEmitter
+  | Container3D
+  | Model;
 
 export type PropertyTab = "scene" | "object" | "text";
 export type PropertyTabState = {

@@ -5,6 +5,7 @@
   import NumberField from "blender-elements/src/NumberField/NumberField.svelte";
   import Checkbox from "blender-elements/src/Checkbox/Checkbox.svelte";
   import Property from "blender-elements/src/Property/Property.svelte";
+  import QuaternionPanel from "./QuaternionPanel.svelte";
 
   export let props: NodeProperties;
   export let expanded: Record<string, boolean>;
@@ -29,7 +30,10 @@
   $: is3d = typeof props.z === "number" || typeof props.scaleZ === "number";
 
   $: hasRotationQuaternion =
-    typeof props.quaternionX === "number";
+    typeof props.quaternionX === "number" || 
+    typeof props.quaternionY === "number" || 
+    typeof props.quaternionZ === "number" || 
+    typeof props.quaternionW === "number";
 
   let skewDimensionsPanel = "";
   $: if (typeof props.skewX === "number") {
@@ -87,54 +91,17 @@
 
 {#if hasRotationQuaternion}
 <Panel title="3D" bind:expanded={expanded.prop3d}>
-  <Property label="Quaternion X" hint="The rotation of the 3D object in quaternion representation" group>
-    <NumberField
-      value={props.quaternionX}
-      step={0.1}
-      min={-1}
-      max={1}
-      location="TOP"
-      suffix=""
-      on:change={(e) =>
-        dispatch("change", { property: "quaternionX", value: e.detail })}
-    />
-  </Property>
-  <Property label="Y" group>
-    <NumberField
-      value={props.quaternionY}
-      step={0.1}
-      min={-1}
-      max={1}
-      location="MIDDLE"
-      suffix=""
-      on:change={(e) =>
-        dispatch("change", { property: "quaternionY", value: e.detail })}
-    />
-  </Property>
-  <Property label="Z" group>
-    <NumberField
-      value={props.quaternionZ}
-      step={0.1}
-      min={-1}
-      max={1}
-      location="MIDDLE"
-      suffix=""
-      on:change={(e) =>
-        dispatch("change", { property: "quaternionZ", value: e.detail })}
-    />
-  </Property>
-  <Property label="W" group>
-    <NumberField
-      value={props.quaternionW}
-      step={0.1}
-      min={-1}
-      max={1}
-      location="BOTTOM"
-      suffix=""
-      on:change={(e) =>
-        dispatch("change", { property: "quaternionW", value: e.detail })}
-    />
-  </Property>
+  <QuaternionPanel 
+  x={props.quaternionX}
+  y={props.quaternionY}
+  z={props.quaternionZ}
+  w={props.quaternionW}
+  on:change={(e) => {
+    dispatch("change", { property: "quaternionX", value: e.detail.x })
+    dispatch("change", { property: "quaternionY", value: e.detail.y })
+    dispatch("change", { property: "quaternionZ", value: e.detail.z })
+    dispatch("change", { property: "quaternionW", value: e.detail.w })
+  }}/>
 </Panel>
 {/if}
 
