@@ -5,7 +5,7 @@
   import NumberField from "blender-elements/src/NumberField/NumberField.svelte";
   import Checkbox from "blender-elements/src/Checkbox/Checkbox.svelte";
   import Property from "blender-elements/src/Property/Property.svelte";
-  import QuaternionPanel from "./QuaternionPanel.svelte";
+  import QuaternionProperties from "./QuaternionProperties.svelte";
 
   export let props: NodeProperties;
   export let expanded: Record<string, boolean>;
@@ -91,7 +91,7 @@
 
 {#if hasRotationQuaternion}
 <Panel title="3D" bind:expanded={expanded.prop3d}>
-  <QuaternionPanel 
+  <QuaternionProperties 
   x={props.quaternionX}
   y={props.quaternionY}
   z={props.quaternionZ}

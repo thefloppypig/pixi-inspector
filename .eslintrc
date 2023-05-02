@@ -10,12 +10,6 @@
     "extraFileExtensions": [".cjs", ".svelte"]
   },
   "rules": {
-    "import/no-extraneous-dependencies": "off",
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto"
-      }
-    ]
+    "import/no-extraneous-dependencies": "off"
   }
 }
