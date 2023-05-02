@@ -1,5 +1,1 @@
-chrome.devtools.panels.create(
-  "PixiJS Epic",
-  "panel-icon.png",
-  "pixi-panel.html"
-);
+chrome.devtools.panels.create("PixiJS", "panel-icon.png", "pixi-panel.html");
