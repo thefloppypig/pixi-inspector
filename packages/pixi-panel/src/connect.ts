@@ -10,6 +10,7 @@ import pixiDevtoolsProperties from "./pixi-devtools/pixiDevtoolsProperties";
 import pixiDevtoolsClickToSelect from "./pixi-devtools/pixiDevtoolsClickToSelect";
 
 import { poll } from "./bridge-fns";
+import patchPixi from "./patchPixi";
 
 function detect() {
   const win = window as any;
@@ -65,7 +66,7 @@ export default function connect(bridge: BridgeFn): Readable<
     bridge,
     `(${detect.toString()}())`,
 
-    2500
+    500
   );
   const errorStore = writable<Error | undefined>();
   const readable = derived(detected, ({ data, error }) => {
@@ -89,6 +90,9 @@ export default function connect(bridge: BridgeFn): Readable<
         window.__PIXI_DEVTOOLS__.properties = (${pixiDevtoolsProperties.toString()}(window.__PIXI_DEVTOOLS__));
         window.__PIXI_DEVTOOLS__.clickToSelect = (${pixiDevtoolsClickToSelect.toString()}(window.__PIXI_DEVTOOLS__));
       })();`).then(() => detected.sync());
+    }
+    if (data === "PATCHABLE") {
+      patchPixi(bridge);
     }
 
     return data;
