@@ -51,7 +51,7 @@
       match={child.match}
       muted={visible === false || muted}
       children={child.children}
-      depth={depth + 1}
+      depth={depth + 0.6}
       on:expand={({ detail }) => dispatch("expand", [id, ...detail])}
       on:collapse={({ detail }) => dispatch("collapse", [id, ...detail])}
       on:activate={({ detail }) => dispatch("activate", [id, ...detail])}
